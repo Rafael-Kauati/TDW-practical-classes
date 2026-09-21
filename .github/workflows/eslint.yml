@@ -1,5 +1,4 @@
 
-
 on:
   push:
     branches:
@@ -14,6 +13,10 @@ jobs:
   lint:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: class-1/tdw-tk
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -22,10 +25,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
+          cache-dependency-path: class-1/tdw-tk/package-lock.json
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Run ESLint
+      - name: Run lint
         run: npm run lint
-
